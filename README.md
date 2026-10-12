@@ -1,18 +1,24 @@
 # The Same Machine
 
-**What 6,854 remembered, imagined and retold stories reveal about constructive memory.**
+**Are real memories and made-up stories built the same way?** An interactive look at 6,854 stories.
 
 Live: https://aliqureshi1206.github.io/the-same-machine/
 
-An interactive data story built around the *constructive episodic simulation hypothesis* (Schacter & Addis, 2007): the idea that remembering the past and imagining the future are carried out by the same constructive system. It uses the Hippocorpus, which pairs real memories with imagined versions of the same events and with retellings of the same memory months later, and scores every story against ~90,000 human-rated words.
+Research from the Schacter Memory Lab at Harvard suggests that remembering the past and imagining the future use the same brain machinery: each memory is rebuilt from pieces, not replayed like a video. This project tests that idea on the Hippocorpus, a public collection of stories in which:
 
-## Findings
+- people wrote about something real that happened to them,
+- strangers wrote made-up versions of the same events, and
+- the original writers told their memory again months later.
 
-- **Signature.** Real memories carry more specific anchors (numerals, dates, rarer words, concrete and visual language). Imagined stories carry more thinking words, hedges, generalities and interoceptive (bodily) language. This matches the predictions of reality-monitoring theory. All effects are small (|d| ≤ 0.42).
-- **Shared territory.** In semantic space, remembered and imagined stories are fully intermixed.
-- **Distortion.** Across 1,310 memory/retelling pairs, the memories people rehearse most, and rate as most important, change the most between tellings. Sensory-rich memories change the least (ρ ≈ −.23).
-- **Age.** Between ages 18 and 55+, age-related changes in sensory language, thinking words and generalities run in parallel for remembering and imagining.
-- **Separability.** A cross-validated model separates memory from imagination at AUC 0.69 using 25 interpretable measures, and at 0.78 using the full vocabulary. Retellings score between the two.
+Every story is measured 25 ways, using simple counts (numbers, dates, "thinking" words) and published lists of about 90,000 words that people rated for things like how concrete they are and which senses they bring to mind.
+
+## What it found
+
+- **Real memories have more details.** They are about 14% longer and use 60% more numbers, plus more dates, specific words and things you can see.
+- **Made-up stories have more thinking.** They use about 30% more words like *think*, *know* and *maybe*, and more general statements.
+- **But mostly they look the same.** All the differences are small, and a computer model is right only 64% of the time (a coin flip is 50%).
+- **Memories change when retold.** The memories people think about most, and care about most, change the most between tellings. Memories first told with lots of sensory detail change the least.
+- **Age affects both in the same way.** Between ages 18 and 55+, memory and imagination mostly shift together, which fits the "same machine" idea.
 
 ## Reproduce
 

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Same Machine</title>
-<meta name="description" content="A data story about remembering, imagining and retelling. It analyses 6,854 stories (1.8 million words) to look at the constructive episodic simulation hypothesis.">
+<meta name="description" content="Are real memories and made-up stories built the same way? A look at 6,854 stories people remembered, imagined and retold.">
 <meta property="og:title" content="The Same Machine">
-<meta property="og:description" content="What 6,854 remembered, imagined and retold stories reveal about constructive memory.">
+<meta property="og:description" content="Are real memories and made-up stories built the same way? A look at 6,854 stories.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
@@ -18,15 +18,15 @@
 <header class="topbar">
   <span class="brand">The Same Machine</span>
   <nav>
-    <a href="#premise">Premise</a>
-    <a href="#game">Test yourself</a>
-    <a href="#signature">Signature</a>
+    <a href="#premise">The idea</a>
+    <a href="#game">Try it</a>
+    <a href="#signature">Differences</a>
     <a href="#map">Map</a>
     <a href="#retelling">Retelling</a>
     <a href="#age">Age</a>
-    <a href="#correlations">Correlations</a>
-    <a href="#next">Next studies</a>
-    <a href="#methods">Methods</a>
+    <a href="#correlations">Connections</a>
+    <a href="#next">Next steps</a>
+    <a href="#methods">How it was made</a>
   </nav>
 </header>
 
@@ -34,10 +34,10 @@
 <header class="hero">
   <canvas id="heroCanvas" aria-hidden="true"></canvas>
   <div class="hero-inner">
-    <div class="kicker">A data story on constructive memory</div>
+    <div class="kicker">A data story about memory and imagination</div>
     <h1>The Same<br><em>Machine</em></h1>
-    <p class="dek">What 6,854 remembered, imagined and retold stories show about how the mind builds the past and the future from the same parts.</p>
-    <div class="byline">By <b>Ali Qureshi</b> · Built on the Hippocorpus (Sap et al., 2020) and 90,000 human-rated words · October 2026</div>
+    <p class="dek">When you remember something and when you imagine something, your brain may be using the same tools. I tested that idea on 6,854 real stories.</p>
+    <div class="byline">By <b>Ali Qureshi</b> · Data: the Hippocorpus story collection (Sap et al., 2020) and published word-rating lists · October 2026</div>
   </div>
   <div class="scrollcue">Scroll ↓</div>
 </header>
@@ -47,47 +47,46 @@
 <!-- ============================================================ PREMISE -->
 <section id="premise">
   <div class="prose">
-    <div class="chapter">01 — PREMISE</div>
-    <h2>Memory is not a recording. <em>It is a construction kit.</em></h2>
-    <p class="lede">For three decades the Schacter Memory Lab at Harvard has argued something that sounds wrong at first. The main job of episodic memory may not be to preserve the past. Memory is <strong>constructive</strong>. Each recollection is rebuilt from scattered fragments, and the system that rebuilds it is the same one we use to imagine things that have not happened yet.</p>
-    <p>This is the <strong>constructive episodic simulation hypothesis</strong><sup><a href="#r1">1</a></sup>. It explains two things together. We can picture tomorrow's job interview because we can flexibly recombine pieces of past experience. The same flexibility is why memory goes wrong: details migrate, gaps get filled, and a retold story slowly becomes a different story<sup><a href="#r2">2</a></sup>.</p>
-    <p>If remembering and imagining really run on the same machine, the stories people produce in each mode should look alike. They should not look identical. The hypothesis predicts specific places where they differ, and the reality-monitoring literature<sup><a href="#r3">3</a></sup> says where to look: perceived events leave <strong>sensory and contextual</strong> traces, while imagined ones carry more traces of <strong>cognitive operations</strong>, the effort of making things up.</p>
-    <p>This project tests those predictions at a scale lab studies rarely reach. It uses every story in the Hippocorpus and scores each word against three large sets of human-rated norms.</p>
+    <div class="chapter">01 — THE IDEA</div>
+    <h2>Memory isn't a video recording. <em>It's rebuilt each time.</em></h2>
+    <p class="lede">Most of us picture memory as a recording we play back. Research from the Schacter Memory Lab at Harvard suggests something different. Each time you remember an event, your brain <strong>rebuilds it from bits and pieces</strong>. And the brain uses the same rebuilding process to <strong>imagine things that haven't happened yet</strong>, like picturing tomorrow's job interview<sup><a href="#r1">1</a></sup>.</p>
+    <p>This idea explains two things at once. It explains why we can imagine the future: we reuse pieces of the past. And it explains why memory makes mistakes. Because a memory is rebuilt rather than replayed, details can shift, gaps get filled in, and a story told many times can slowly change<sup><a href="#r2">2</a></sup>.</p>
+    <p>So here is the question this project asks: <strong>if remembering and imagining use the same machinery, do real memories and made-up stories look the same when people write them down?</strong> Earlier research gives a hint about where they might differ. Real experiences tend to leave behind <strong>sensory details</strong> (what you saw, where you were, when it was). Made-up events tend to show <strong>signs of thinking</strong>, words like "I think" or "maybe"<sup><a href="#r3">3</a></sup>.</p>
   </div>
 
   <figure class="mid fade-in">
-    <div class="fig-head"><div><div class="fig-title">The natural experiment inside the Hippocorpus</div>
-    <div class="fig-sub">Crowdworkers wrote 15–25 sentence stories under three instructions. The design pairs each imagined story with a real one on the same event, and each retelling with its original.</div></div></div>
+    <div class="fig-head"><div><div class="fig-title">Where the stories come from</div>
+    <div class="fig-sub">The Hippocorpus is a free, public collection of short stories written by online volunteers. It was set up so that real and made-up stories can be compared fairly.</div></div></div>
     <div class="design">
       <div class="box">
-        <span class="sw rec"></span><h4 style="display:inline">Recalled</h4>
+        <span class="sw rec"></span><h4 style="display:inline">Remembered</h4>
         <div class="big rec">2,779</div>
-        <p>A person describes a memorable event from their own life in the past six months, then writes a short summary of it.</p>
+        <p>A person writes about something real and memorable that happened to them in the last six months, plus a one-line summary.</p>
       </div>
       <div class="arrow">→</div>
       <div class="col">
         <div class="box">
           <span class="sw img"></span><h4 style="display:inline">Imagined</h4>
           <div class="big img">2,756</div>
-          <p>A different person gets only that summary and writes the story as if it had happened to them. Same event, no memory of it.</p>
+          <p>A <i>different</i> person reads only that one-line summary and writes the story as if it had happened to them. Same event, but made up.</p>
         </div>
         <div class="box">
           <span class="sw ret"></span><h4 style="display:inline">Retold</h4>
           <div class="big ret">1,319</div>
-          <p>The original author comes back months later and tells the same memory again, without seeing their first version.</p>
+          <p>Months later, the <i>original</i> person writes about the same memory again, without looking at what they wrote the first time.</p>
         </div>
       </div>
     </div>
-    <figcaption>Because of this pairing we can compare the <b>same event remembered vs. simulated</b> (2,756 matched pairs) and the <b>same memory at two points in time</b> (1,310 matched pairs).</figcaption>
+    <figcaption>This gives two fair comparisons: <b>the same event, real vs. made up</b> (2,756 pairs), and <b>the same memory told twice, months apart</b> (1,310 pairs).</figcaption>
   </figure>
 </section>
 
 <!-- ============================================================ GAME -->
 <section id="game">
   <div class="prose">
-    <div class="chapter">02 — TEST YOURSELF</div>
-    <h2>Can you tell a memory <em>from an invention?</em></h2>
-    <p>Below are real excerpts from the corpus: half are true memories and half were made up by someone who never lived the event. Guess, and then compare yourself with a transparent statistical model that sees only 25 linguistic measures and never the words themselves.</p>
+    <div class="chapter">02 — TRY IT</div>
+    <h2>Can you tell a real memory <em>from a made-up one?</em></h2>
+    <p>Below are real excerpts from the collection. Half are true memories. The other half were written by someone who never lived the event. Make your guess, then see what a simple computer model guessed. The model never reads the story itself; it only looks at counts like how many numbers, dates and "thinking" words it contains.</p>
   </div>
   <div class="game" id="gameRoot"></div>
 </section>
@@ -95,128 +94,128 @@
 <!-- ============================================================ SIGNATURE -->
 <section id="signature">
   <div class="prose">
-    <div class="chapter">03 — THE SIGNATURE</div>
-    <h2>Memories are <em class="rec">anchored</em>. Imaginings <em class="img">think out loud</em>.</h2>
-    <p>Each of the 6,854 stories was scored on 25 measures. Some come from published norms: how <strong>concrete</strong> each word is (37,058 rated words), how strongly it evokes each of <strong>six senses</strong> (39,707 words), and how pleasant and arousing it is (13,905 words). Others are counts that track the Autobiographical Interview's split between internal (episodic) and external (semantic) detail<sup><a href="#r4">4</a></sup>: clock and calendar anchors, numerals, proper nouns, thinking verbs, hedges and generalities.</p>
-    <p>The chart compares recalled and imagined stories on every measure. Points to the right mean the measure is higher in real memories.</p>
+    <div class="chapter">03 — THE DIFFERENCES</div>
+    <h2>Real memories have <em class="rec">more details</em>. Made-up stories have <em class="img">more thinking</em>.</h2>
+    <p>I measured every story in 25 ways. Some are simple counts: how many <strong>numbers</strong>, <strong>dates and times</strong>, <strong>names</strong> and <strong>"thinking" words</strong> (think, know, realize) it uses. Others use published lists in which thousands of people rated individual words. For example, those lists say how <strong>concrete</strong> a word is ("table" is concrete, "idea" is not) and how strongly it brings to mind each of the <strong>senses</strong> ("bright" is about sight, "loud" is about sound). Altogether those lists cover about 90,000 rated words.</p>
+    <p>The chart below compares real and imagined stories on all 25 measures. <span class="rec">Blue dots on the right</span> mean real memories have more of something. <span class="img">Orange dots on the left</span> mean made-up stories have more.</p>
   </div>
 
   <figure class="fade-in">
     <div class="fig-head">
-      <div><div class="fig-title">Effect size of being a real memory, for 25 language measures</div>
-      <div class="fig-sub">Cohen's d (recalled − imagined) with 95% CI. Switch to matched pairs to compare each imagined story only with the real story it was built from.</div></div>
-      <div class="seg" id="effToggle"><button class="on" data-v="ind">All stories</button><button data-v="pair">Matched pairs</button></div>
+      <div><div class="fig-title">How real memories differ from made-up stories</div>
+      <div class="fig-sub">The further a dot is from the middle line, the bigger the difference. The line through each dot shows the margin of error. Faded dots: no reliable difference. Use "Same-event pairs" to compare each made-up story only with the real story it was based on.</div></div>
+      <div class="seg" id="effToggle"><button class="on" data-v="ind">All stories</button><button data-v="pair">Same-event pairs</button></div>
     </div>
     <div class="card"><div class="chart" id="forest"></div></div>
-    <figcaption><b>Read it as a signature.</b> Real memories are longer, use longer sentences and rarer, more specific words, and contain more numerals, dates and times, and concrete, visual language. Imagined stories contain more <b>thinking words</b> (<i>think, know, realize, decide</i>), more <b>hedges</b> (<i>maybe, probably</i>), more <b>generalities</b> (<i>always, people, life</i>) and more bodily and emotional sensation. This is close to what reality-monitoring theory predicts: imagination leaves visible traces of the cognitive work it took.</figcaption>
+    <figcaption><b>In plain terms:</b> real memories are about <b>14% longer</b>, use <b>60% more numbers</b>, and use more dates, specific words and things you can see. Made-up stories use about <b>30% more thinking words</b> (think, know, decide), more <b>unsure words</b> (maybe, probably) and more <b>general statements</b> (always, people, life). When you make something up, you have to reason it out, and that reasoning shows up in the writing.</figcaption>
   </figure>
 
   <div class="prose">
-    <p class="pull">The visual sense separates memory from imagination best. Imagined stories lean toward the body: taste, and especially interoception, the felt sense of one's own insides.</p>
+    <p class="pull">Real memories lean on what people <i>saw</i>. Made-up stories lean on what people <i>felt</i> inside their bodies.</p>
   </div>
 
   <figure class="mid fade-in">
-    <div class="fig-head"><div><div class="fig-title">Sensory fingerprint: how strongly each kind of story evokes each sense</div>
-    <div class="fig-sub">Mean Lancaster perceptual strength of content words, standardised against all 6,854 stories (z). Dots further apart mean bigger differences.</div></div>
-    <div class="legend"><span><i class="sw rec"></i>Recalled</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold</span></div></div>
+    <div class="fig-head"><div><div class="fig-title">Which senses each kind of story uses</div>
+    <div class="fig-sub">Each dot shows how much a type of story uses words about that sense, compared with the average story. Right of the middle line = more than average.</div></div>
+    <div class="legend"><span><i class="sw rec"></i>Remembered</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold</span></div></div>
     <div class="card"><div class="chart" id="fingerprint"></div></div>
-    <figcaption>Retold memories keep the visual tilt of the originals, which suggests this is a stable property of genuine episodic content and not something that wears off as the story is repeated.</figcaption>
+    <figcaption>Real memories use more <b>sight</b> words. Made-up stories use more <b>taste</b> and <b>body feeling</b> words (like "hungry", "tired", "nervous"). Retold memories keep the same pattern as the originals, so the extra sight detail doesn't fade when a memory is retold.</figcaption>
   </figure>
 
   <figure class="fade-in">
     <div class="fig-head">
-      <div><div class="fig-title">The overlap is the real story</div>
-      <div class="fig-sub">Distribution of each measure across all stories, by origin. Even the strongest effects are small compared with the variation between people.</div></div>
+      <div><div class="fig-title">But mostly, they look the same</div>
+      <div class="fig-sub">Each curve shows how common each score is among that type of story. Pick a measure to compare. The thin vertical lines mark the averages.</div></div>
       <div class="seg" id="distToggle"></div>
     </div>
     <div class="card"><div class="chart" id="dist"></div>
-    <div class="legend" style="margin:6px 0 4px"><span><i class="sw rec"></i>Recalled</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold</span></div></div>
-    <figcaption>This is what "the same machine" looks like statistically: the distributions overlap almost entirely and are shifted only slightly. No single measure can classify a story. Together they can, a little.</figcaption>
+    <div class="legend" style="margin:6px 0 4px"><span><i class="sw rec"></i>Remembered</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold</span></div></div>
+    <figcaption>The curves sit almost on top of each other. The differences are real, but small. You could never tell a single story apart using just one of these measures. This is exactly what you'd expect if remembering and imagining run on <b>the same machine</b>.</figcaption>
   </figure>
 
   <figure class="fade-in">
-    <div class="fig-head"><div><div class="fig-title">The words that give each mode away</div>
-    <div class="fig-sub">Weighted log-odds with an informative Dirichlet prior (Monroe et al., 2008). Bars show z-scores. Only words used at least 40 times across the corpus are included.</div></div></div>
+    <div class="fig-head"><div><div class="fig-title">The words that give each type away</div>
+    <div class="fig-sub">These are the words most typical of each type of story. Longer bar = more typical. Only words used at least 40 times are shown.</div></div></div>
     <div class="card"><div class="chart" id="words"></div></div>
-    <figcaption>Recalled stories are full of <b>months, hours and places</b> (<i>june, july, hour, room</i>). Imagined stories rely on <b>mental-state language and hedging</b> (<i>think, know, guess, hope, believe, maybe, sure</i>) and on the present and future tense (<i>I'm, I'll, will, can</i>), so the writer is visibly reasoning about the event instead of reporting it. Note: some recalled-side words (<i>memorable, event, recently</i>) echo the task prompt.</figcaption>
+    <figcaption>Real memories mention <b>months, hours and places</b> (<i>June, July, hour, room</i>). Made-up stories use words about <b>what's going on in the writer's head</b> (<i>think, know, guess, hope, believe, sure</i>) and talk in the present and future (<i>I'm, I'll, will, can</i>). One caveat: words like <i>memorable</i> and <i>event</i> show up because they were in the instructions given to the people writing real memories.</figcaption>
   </figure>
 </section>
 
 <!-- ============================================================ MAP (scrolly) -->
 <section id="map" style="padding-bottom:0">
   <div class="prose">
-    <div class="chapter">04 — THE TERRITORY</div>
-    <h2>Six thousand lives, <em>one landscape</em></h2>
-    <p>Each story was projected into a semantic space (TF-IDF → 80-dimension SVD → t-SNE), so stories about similar events sit near each other. Scroll to explore the map. Hover over any dot to see what the story is about.</p>
+    <div class="chapter">04 — THE MAP</div>
+    <h2>Six thousand stories, <em>one map</em></h2>
+    <p>I placed every story on a map so that stories about similar things sit close together: weddings near weddings, hospital visits near hospital visits. Scroll down to explore it, and hover over any dot to see what that story is about.</p>
   </div>
 </section>
 <div class="scrolly" id="scrolly">
   <div class="steps">
-    <div class="step" data-step="0"><div><h4>Every dot is a story</h4>Altogether 6,854 of them, from 3,640 people. The territory looks the way human life does: weddings, funerals, births, road trips, job offers, hospital rooms.</div></div>
-    <div class="step" data-step="1"><div><h4>Now colour them by origin</h4><span class="rec">Remembered</span>, <span class="img">imagined</span> and <span class="ret">retold</span> stories are <b>thoroughly intermixed</b>. Imagination doesn't use a separate vocabulary of events. It works in exactly the same semantic territory as memory, as the shared-system view predicts.</div></div>
-    <div class="step" data-step="2"><div><h4>Sixteen neighbourhoods of life</h4>K-means on the semantic space finds sixteen clusters of events. Imagined stories are over-represented in just two: <b>conversations</b> and the abstract <b>"feelings and life"</b> cluster. When concrete detail runs out, invented events drift toward dialogue and reflection.</div></div>
-    <div class="step" data-step="3"><div><h4>How memory-like does each story read?</h4>Colour now shows a cross-validated model's estimate that a story is a real memory, using the 25 language measures. The gradient runs through every neighbourhood: some imagined stories read as utterly real, and some real memories read as invented.</div></div>
-    <div class="step" data-step="4"><div><h4>Where invention shows most</h4>Each label now shows the topic's <b>gap in concreteness</b> between real and imagined versions. It is largest for <b>car accidents, hospitals and the outdoors</b>, physical, spatially complex events that are hard to fake, and smallest for conversations, pets and reflection.</div></div>
+    <div class="step" data-step="0"><div><h4>Every dot is one story</h4>There are 6,854 stories here, written by 3,640 people. Together they cover the big moments of life: weddings, funerals, births, road trips, new jobs, hospital stays.</div></div>
+    <div class="step" data-step="1"><div><h4>Now coloured by type</h4><span class="rec">Remembered</span>, <span class="img">imagined</span> and <span class="ret">retold</span> stories are <b>completely mixed together</b>. People don't make up different kinds of events from the ones they remember. Imagination works on the same material as memory.</div></div>
+    <div class="step" data-step="2"><div><h4>Sixteen kinds of life events</h4>A computer grouped the stories into sixteen topics. Made-up stories show up more than real ones in just two: <b>conversations</b> and <b>"feelings and life"</b>. When people run out of concrete detail to invent, they fill the space with dialogue and reflection.</div></div>
+    <div class="step" data-step="3"><div><h4>How real does each story sound?</h4>Now the colour shows the computer model's guess for each story: <span class="rec">blue</span> means "sounds like a real memory", <span class="img">orange</span> means "sounds made up". Both colours appear everywhere. Some made-up stories sound completely real, and some real memories sound invented.</div></div>
+    <div class="step" data-step="4"><div><h4>Where made-up stories give themselves away</h4>Each label now shows how much more <b>concrete</b> (physical, touchable) the real stories in that topic are than the made-up ones. The gap is biggest for <b>car accidents, hospitals and the outdoors</b>: physical events that are hard to fake. It is smallest for conversations, pets and feelings.</div></div>
   </div>
   <div class="sticky">
-    <canvas id="mapCanvas" aria-label="Semantic map of 6,854 stories"></canvas>
+    <canvas id="mapCanvas" aria-label="Map of 6,854 stories, grouped by topic"></canvas>
     <div class="map-legend" id="mapLegend"></div>
   </div>
 </div>
 <section style="padding-top:4vh">
   <figure class="fade-in">
-    <div class="fig-head"><div><div class="fig-title">Topic by topic: where does imagination fall short?</div>
-    <div class="fig-sub">Cohen's d (recalled − imagined) within each of the 16 event clusters. <span class="rec">Blue</span>: memory is higher. <span class="img">Orange</span>: imagination is higher. The bar shows the cluster's mix of recalled, imagined and retold stories.</div></div></div>
+    <div class="fig-head"><div><div class="fig-title">Topic by topic: what do made-up stories get wrong?</div>
+    <div class="fig-sub"><span class="rec">Blue</span> squares: real memories have more of this. <span class="img">Orange</span> squares: made-up stories have more. Darker = bigger difference. The bars on the right show the mix of story types in each topic.</div></div></div>
     <div class="card"><div class="chart" id="topicHeat"></div></div>
-    <figcaption>The thinking-word gap (imagined > recalled) appears in <b>every one of the 16 topics</b>, so it is not caused by any one kind of event. It is largest for sports, birthdays and concerts, which are social scripts where an imaginer has to reason about what would happen, while someone who was there just reports it.</figcaption>
+    <figcaption>Made-up stories use more thinking words in <b>all 16 topics</b>, so this isn't caused by one kind of event. The gap is biggest for sports, birthdays and concerts. If you weren't at the game, you have to work out what probably happened. If you were there, you just say what happened.</figcaption>
   </figure>
 </section>
 
 <!-- ============================================================ RETELLING -->
 <section id="retelling">
   <div class="prose">
-    <div class="chapter">05 — DISTORTION</div>
+    <div class="chapter">05 — RETELLING</div>
     <h2>The memories we revisit most <em>change the most</em></h2>
-    <p>Months after writing their memory, 1,310 people told the same event again. These pairs let us watch memory reconstruct itself in natural language: same person, same event, different moment of retrieval.</p>
+    <p>Months after their first story, 1,310 people wrote about the same memory again. Comparing the two versions shows memory being rebuilt: same person, same event, different day.</p>
   </div>
 
   <figure class="mid fade-in">
-    <div class="fig-head"><div><div class="fig-title">How much of a story survives retelling?</div>
-    <div class="fig-sub">TF-IDF cosine similarity between story pairs. Higher means more of the same specific wording.</div></div>
-    <div class="legend"><span><i class="sw ret"></i>Retold vs. own original</span><span><i class="sw img"></i>Imagined vs. real story it was built from</span><span><i class="sw" style="background:#6b6b70"></i>Random pairs</span></div></div>
+    <div class="fig-head"><div><div class="fig-title">How much wording carries over from one telling to the next?</div>
+    <div class="fig-sub">Each curve shows how much specific wording two stories share. Further right = more shared wording.</div></div>
+    <div class="legend"><span><i class="sw ret"></i>Same person, telling it again</span><span><i class="sw img"></i>A stranger imagining the same event</span><span><i class="sw" style="background:#6b6b70"></i>Two random stories</span></div></div>
     <div class="card"><div class="chart" id="simHist"></div></div>
-    <figcaption>A retelling shares roughly <b>twice as much</b> specific language with its original as a stranger's imagined version does (median 0.28 vs 0.15), but it is far from a copy. Most of the wording, and much of the detail, is rebuilt from scratch every time.</figcaption>
+    <figcaption>A retelling shares about <b>twice as much</b> wording with the original as a stranger's made-up version does. But it is far from a copy. Most of the wording, and much of the detail, gets rebuilt from scratch each time.</figcaption>
   </figure>
 
   <div class="grid2" style="max-width:var(--wide);margin:0 auto">
     <figure class="fade-in" style="margin:0">
-      <div class="fig-title">Rehearsal increases change</div>
-      <div class="fig-sub">Drift (1 − similarity) by how often the person said they think or talk about the event.</div>
+      <div class="fig-title">Thinking about it more → more change</div>
+      <div class="fig-sub">How much the story changed between tellings, by how often the person says they think or talk about the event (1 = rarely, 5 = very often).</div>
       <div class="card" style="margin-top:12px"><div class="chart" id="driftFreq"></div></div>
     </figure>
     <figure class="fade-in" style="margin:0">
-      <div class="fig-title">And so does importance</div>
-      <div class="fig-sub">Drift by how important or personal the event felt (1–5).</div>
+      <div class="fig-title">More important → more change</div>
+      <div class="fig-sub">How much the story changed, by how important the event was to the person (1 = not very, 5 = extremely).</div>
       <div class="card" style="margin-top:12px"><div class="chart" id="driftImp"></div></div>
     </figure>
   </div>
 
   <div class="prose" style="margin-top:48px">
-    <p>This is the counter-intuitive result. You might expect the memories we rehearse most to be the most stable. Instead, <strong>frequently revisited and emotionally significant memories change more between tellings</strong>. That fits a reconstructive account in which every retrieval is a new construction that can update the trace, and it echoes the finding that vivid, important "flashbulb" memories feel certain while being no more consistent than ordinary ones<sup><a href="#r5">5</a></sup>.</p>
+    <p>This is the surprising part. You might expect the memories we go over most often to be the most stable, like a well-worn path. Instead, <strong>the memories people think about most, and care about most, change the most between tellings</strong>. That fits the idea that each time you recall a memory you rebuild it, and each rebuild is a chance for it to change. It also matches older research showing that vivid, emotional memories <i>feel</i> very accurate but aren't any more consistent than ordinary ones<sup><a href="#r5">5</a></sup>.</p>
   </div>
 
   <figure class="mid fade-in">
-    <div class="fig-head"><div><div class="fig-title">What predicts how much a memory drifts?</div>
-    <div class="fig-sub">Spearman ρ with drift across 1,310 retold pairs. Bars faded where p ≥ .01.</div></div></div>
+    <div class="fig-head"><div><div class="fig-title">What goes with a memory changing more (or less)?</div>
+    <div class="fig-sub">Bars to the right: more of this goes with more change. Bars to the left: more of this goes with <i>less</i> change. Faded bars: no reliable link.</div></div></div>
     <div class="card"><div class="chart" id="driftPred"></div></div>
-    <figcaption><b>Sensory richness protects.</b> Memories first told with strong perceptual language change the least (ρ ≈ −.23), the largest predictor in the set. Rich perceptual encoding may anchor reconstruction. Elapsed time and age barely matter.</figcaption>
+    <figcaption><b>Sensory detail protects a memory.</b> Memories that were first told with lots of sensory detail changed the least, and this was the strongest link of all. How long ago the event happened, and the person's age, made almost no difference.</figcaption>
   </figure>
 
   <figure class="mid fade-in">
     <div class="fig-head"><div><div class="fig-title">What a retelling loses and gains</div>
-    <div class="fig-sub">Within-pair standardised change (d<sub>z</sub>), retold − original. Bars faded where p ≥ .01.</div></div></div>
+    <div class="fig-sub">Bars to the left: the second telling has less of this. Bars to the right: it has more. Faded bars: no reliable change.</div></div></div>
     <div class="card"><div class="chart" id="retDelta"></div></div>
-    <figcaption>Retellings lose <b>numerals, time anchors and length</b>, the specific episodic scaffolding. They gain <b>"we"</b> and, more weakly, <b>thinking words</b>. The memory becomes shorter, more social and more interpreted: more gist, less episode.</figcaption>
+    <figcaption>Second tellings lose <b>numbers, dates and times, and length</b>, the specific details. They gain <b>"we"</b> and, a little, <b>thinking words</b>. The memory becomes shorter and more about the overall gist than the exact details.</figcaption>
   </figure>
 
   <div class="tiles" style="max-width:var(--wide);margin:0 auto" id="retTiles"></div>
@@ -226,92 +225,95 @@
 <section id="age">
   <div class="prose">
     <div class="chapter">06 — AGE</div>
-    <h2>Whatever age does to the past, <em>it does to the future</em></h2>
-    <p>A key piece of evidence for the shared-system view is that ageing changes remembered and imagined events <strong>in parallel</strong>. Older adults produce fewer internal (episodic) details and more external (semantic) ones both when remembering past events and when imagining future ones<sup><a href="#r6">6</a></sup>. The Hippocorpus authors span 18 to 55+, which is a narrower window than lab ageing studies, but it lets us test the parallel-slopes prediction directly.</p>
+    <h2>As people age, memory and imagination <em>change together</em></h2>
+    <p>Earlier research by the Schacter lab found that older adults include fewer specific details both when they <strong>remember</strong> the past and when they <strong>imagine</strong> the future. The two decline together<sup><a href="#r6">6</a></sup>. That is strong evidence that both use the same machinery. The writers here are aged 18 to 55+, which is younger than in those studies, but we can still check whether memory and imagination move together as age increases.</p>
   </div>
   <figure class="fade-in">
     <div class="fig-head">
-      <div><div class="fig-title">Language measures by author age, for recalled vs. imagined stories</div>
-      <div class="fig-sub">Means with 95% bootstrap CI. The <i>interaction</i> term tests whether the age slope differs between remembering and imagining.</div></div>
-      <div class="legend"><span><i class="sw rec"></i>Recalled</span><span><i class="sw img"></i>Imagined</span></div>
+      <div><div class="fig-title">Writing style by the writer's age</div>
+      <div class="fig-sub">Lines show averages for each age group. Shaded bands show the margin of error. Under each title: whether the two lines move together.</div></div>
+      <div class="legend"><span><i class="sw rec"></i>Remembered</span><span><i class="sw img"></i>Imagined</span></div>
     </div>
     <div class="grid4 keep2" id="ageGrid"></div>
-    <figcaption>For sensory strength, thinking words, generalities and lexical diversity, the slopes are <b>statistically parallel</b> (interaction p &gt; .05). The two lines move together across age even though they sit at different levels, which is the signature of one shared constructive system. Length is the exception: older authors write longer <i>imaginings</i>, while memory length stays flat with age. Note that within this young-to-midlife range, sensory and concrete language <i>increase</i> with age. The well-documented loss of episodic detail is a later-life effect that this sample does not reach.</figcaption>
+    <figcaption>For sensory words, thinking words, general statements and word variety, the two lines <b>rise and fall together</b> as age goes up, even though one sits higher than the other. That is what you'd expect if one shared system is doing both jobs. Story length is the exception: older writers write longer made-up stories, but not longer real ones. One more note: in this age range, sensory and concrete words actually <i>increase</i> with age. The loss of detail found in earlier studies happens later in life than this sample reaches.</figcaption>
   </figure>
 </section>
 
 <!-- ============================================================ CORRELATIONS -->
 <section id="correlations">
   <div class="prose">
-    <div class="chapter">07 — CORRELATIONS</div>
-    <h2>The full <em>correlation atlas</em></h2>
-    <p>Every language measure against every self-report the authors gave: how important the event was, how often they rehearse it, how stressful writing about it was, their openness to experience, their age, and more. That is 240 correlations per story type, 720 in total, each with its own sample size. Hover over any cell.</p>
+    <div class="chapter">07 — CONNECTIONS</div>
+    <h2>How feelings connect <em>to the way people write</em></h2>
+    <p>After writing, each person answered questions about their story: how important the event was, how often they think about it, how stressful it was to write, and so on. This section checks how those answers connect to the way they wrote. That is 720 checks in total. Hover over any square to see the details.</p>
   </div>
   <figure class="fade-in">
     <div class="fig-head">
-      <div><div class="fig-title">Language × self-report, Spearman ρ</div>
-      <div class="fig-sub">Cells faded where p ≥ .001 (a conservative bar for 720 tests). <span class="rec">Blue</span> positive, <span style="color:#e66767">red</span> negative.</div></div>
-      <div class="seg" id="corrToggle"><button class="on" data-v="recalled">Recalled</button><button data-v="imagined">Imagined</button><button data-v="retold">Retold</button></div>
+      <div><div class="fig-title">What people said about their story vs. how they wrote it</div>
+      <div class="fig-sub"><span class="rec">Blue</span>: when one goes up, the other tends to go up too. <span style="color:#e66767">Red</span>: when one goes up, the other tends to go down. Faded squares: no reliable link.</div></div>
+      <div class="seg" id="corrToggle"><button class="on" data-v="recalled">Remembered</button><button data-v="imagined">Imagined</button><button data-v="retold">Retold</button></div>
     </div>
     <div class="card"><div class="chart" id="corrHeat"></div></div>
-    <figcaption><b>Patterns worth noticing.</b> Memories that were stressful or draining to write are told in lower-valence language (ρ ≈ −.31) with <b>less visual and more interoceptive</b> wording, so hard memories are felt more than seen. Importance and rehearsal follow the same visual-down, body-up pattern. Imagined stories show <b>half as many</b> reliable correlations as recalled ones (28 vs. 59 cells): how imaginers rate their story is much less tied to how they write it, while for genuine memories feeling and language are coupled.</figcaption>
+    <figcaption><b>What stands out:</b> memories that were stressful or draining to write about are told with <b>less pleasant</b> words, <b>fewer sight words</b> and <b>more body-feeling words</b>. Hard memories are felt more than seen. For made-up stories there are only <b>half as many</b> reliable links (28 vs. 59). How people feel about a made-up story has much less effect on how they write it than it does for a real memory.</figcaption>
   </figure>
 
   <figure class="mid fade-in">
     <div class="fig-head"><div><div class="fig-title">How the 24 measures relate to each other</div>
-    <div class="fig-sub">Spearman ρ across all 6,854 stories. Lower triangle only.</div></div></div>
+    <div class="fig-sub">Blue: these two tend to go up together. Red: when one goes up, the other goes down.</div></div></div>
     <div class="card"><div class="chart" id="featHeat"></div></div>
-    <figcaption>Two clusters stand out: a <b>perceptual/concrete</b> block (sensory strength, visual, haptic and concreteness move together) and a <b>reflective</b> block (thinking words, generalities and interoceptive, bodily-feeling language). They are negatively related, so a story tends to be either anchored in perception or in thought, which is the axis that separates memory from imagination.</figcaption>
+    <figcaption>Two groups stand out. Sensory words, sight, touch and concrete words go together: a <b>"what it was like"</b> style. Thinking words, general statements and body-feeling words go together: a <b>"what I thought about it"</b> style. Stories that are high on one tend to be low on the other, and this is the same split that separates real memories from made-up ones.</figcaption>
   </figure>
 
   <figure class="mid fade-in">
-    <div class="fig-head"><div><div class="fig-title">Where the events happen in the story</div>
-    <div class="fig-sub">Share of sentences containing a <i>minor</i> event, by position in the narrative. Human annotations of 240 stories (≈ 4,000 sentences); treat as exploratory.</div></div>
-    <div class="legend"><span><i class="sw rec"></i>Recalled</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold</span></div></div>
+    <div class="fig-head"><div><div class="fig-title">Real life is full of small things</div>
+    <div class="fig-sub">The share of sentences that describe a small, everyday event, from the start of the story to the end. Based on 240 stories that people marked sentence by sentence, so treat it as a first look.</div></div>
+    <div class="legend"><span><i class="sw rec"></i>Remembered</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold</span></div></div>
     <div class="card"><div class="chart" id="eventArc"></div></div>
-    <figcaption>Real memories contain more <b>minor and expected</b> events (19.2% vs. 16.0% of sentences): the small, unremarkable happenings that fill real experience. Imagination keeps the major beats and skips the filler. Surprising events are equally common in both.</figcaption>
+    <figcaption>Real memories include more <b>small, ordinary events</b> (19% of sentences vs. 16%): the little things that happen in real life on the way to the big moment. Made-up stories keep the big moments but skip the in-between. Surprising events are just as common in both.</figcaption>
   </figure>
 
   <figure class="mid fade-in">
-    <div class="fig-head"><div><div class="fig-title">How separable are memory and imagination?</div>
-    <div class="fig-sub">Out-of-fold model scores, grouped 5-fold cross-validation (no author appears in both training and test).</div></div></div>
+    <div class="fig-head"><div><div class="fig-title">Can a computer tell them apart?</div>
+    <div class="fig-sub">I trained a simple model on some writers' stories and tested it on other writers' stories it had never seen.</div></div></div>
     <div class="tiles" id="clfTiles" style="margin-bottom:18px"></div>
     <div class="card"><div class="chart" id="pRecHist"></div>
-    <div class="legend" style="margin:6px 0 4px"><span><i class="sw rec"></i>Recalled</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold (never seen in training)</span></div></div>
-    <figcaption>Separable, but only modestly: AUC 0.69 from 25 interpretable measures and 0.78 from the full vocabulary. Retellings, which the model never trained on, score <b>between</b> the two. A memory told again reads slightly more like an imagined one.</figcaption>
+    <div class="legend" style="margin:6px 0 4px"><span><i class="sw rec"></i>Remembered</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold (the model never saw these)</span></div></div>
+    <figcaption>Only somewhat. The curves overlap a lot, so the model is often unsure. One interesting result: retold memories, which the model never trained on, land <b>between</b> real and made-up stories. A memory that has been told again sounds slightly more made up.</figcaption>
   </figure>
 </section>
 
 <!-- ============================================================ NEXT -->
 <section id="next">
   <div class="prose">
-    <div class="chapter">08 — WHERE THIS COULD GO</div>
-    <h2>Four studies this <em>points toward</em></h2>
-    <p>This corpus is observational and was not collected under lab control, so every result here is a hypothesis generator, not a test. Each one maps onto an active line of work in the lab.</p>
+    <div class="chapter">08 — NEXT STEPS</div>
+    <h2>Four experiments <em>worth running</em></h2>
+    <p>These stories were collected online, not in a controlled lab study, so the results here are clues rather than proof. Each clue points to an experiment that fits one of the lab's main research areas.</p>
   </div>
   <div class="props">
-    <div class="prop"><div class="tag">Aging &amp; memory</div><h4>Extend the parallel-slopes test past 65</h4><p>Collect Hippocorpus-style recalled/imagined pairs from adults aged 18–85, scored with both the Autobiographical Interview and the automated norm-based measures above. Test whether the automated measures recover the known internal-detail decline, and whether past and future slopes stay parallel in late life.</p><div class="q">Can norm-based scoring replace hours of manual AI coding at scale?</div></div>
-    <div class="prop"><div class="tag">Constructive memory &amp; distortion</div><h4>Rehearsal as a driver of drift</h4><p>Why do frequently rehearsed memories change more? Experimentally manipulate retrieval frequency and retrieval <i>mode</i> (specific vs. general) between two tellings, and measure drift with the same similarity metric, plus whether imagined details enter the retelling.</p><div class="q">Does sensory-rich initial encoding protect against reconstruction?</div></div>
-    <div class="prop"><div class="tag">Episodic simulation</div><h4>A language-level reality-monitoring index</h4><p>The perceptual-versus-reflective axis found here could become a continuous, automated index of "episodicness" for any narrative. Validate it against fMRI activity in the core network during simulation, and against later source-memory confusions.</p><div class="q">Do imagined events that score as memory-like get misremembered as real?</div></div>
-    <div class="prop"><div class="tag">Creativity &amp; problem solving</div><h4>Specificity induction, measured in language</h4><p>The episodic specificity induction boosts divergent thinking<sup><a href="#r7">7</a></sup>. Does it also move a person's imagined narratives along the perceptual axis? Openness barely predicts narrative style here (|ρ| &lt; .07), which suggests style is a <i>state</i> that can be induced, not a trait.</p><div class="q">Is episodic specificity the active ingredient in creative recombination?</div></div>
+    <div class="prop"><div class="tag">Aging &amp; memory</div><h4>Test older adults too</h4><p>Collect the same kind of real and made-up stories from people aged 18 to 85. Check whether the automatic word measures used here pick up the drop in detail that earlier studies found in older adults, and whether memory and imagination keep changing together in later life.</p><div class="q">Could automatic scoring replace hours of hand-scoring by researchers?</div></div>
+    <div class="prop"><div class="tag">Memory distortion</div><h4>Why do rehearsed memories change more?</h4><p>Ask people to recall an event more or fewer times, in more or less detail, before telling it again. Measure how much it changes, and whether imagined details sneak into the later version.</p><div class="q">Does a detailed first memory protect against later change?</div></div>
+    <div class="prop"><div class="tag">Imagining the future</div><h4>A "how real does this sound" score</h4><p>The split between "what it was like" writing and "what I thought about it" writing could become an automatic score for any story. Check it against brain scans taken while people imagine events, and against later mix-ups between what really happened and what was only imagined.</p><div class="q">Do imagined events that sound real get remembered as real later?</div></div>
+    <div class="prop"><div class="tag">Creativity &amp; problem solving</div><h4>Does detail-focused training change writing?</h4><p>Lab studies show that a short exercise focusing people on specific details of past events boosts creative thinking afterwards<sup><a href="#r7">7</a></sup>. Does it also make their imagined stories more "what it was like"? Here, personality (being open-minded) barely affected writing style, which suggests style can be shifted by training.</p><div class="q">Is focusing on specific details the key ingredient in creativity?</div></div>
   </div>
 </section>
 
 <!-- ============================================================ METHODS -->
 <section id="methods">
   <div class="prose methods">
-    <div class="chapter">09 — METHODS &amp; LIMITATIONS</div>
+    <div class="chapter">09 — HOW IT WAS MADE</div>
     <h2 style="font-size:40px">How this was built</h2>
-    <p><strong>Data.</strong> Hippocorpus v3 (Sap, Horvitz, Choi, Smith &amp; Pennebaker, 2020; Microsoft Research): 6,854 stories, 1.8 M words, 120,464 sentences, 3,640 crowdworkers. Lexical norms: Brysbaert, Warriner &amp; Kuperman (2014) concreteness; Lynott et al. (2020) Lancaster Sensorimotor Norms; Warriner, Kuperman &amp; Brysbaert (2013) valence/arousal. Nothing on this page is simulated; every number is computed from these sources.</p>
-    <p><strong>Pipeline.</strong> One reproducible Python script (<code>analysis/build.py</code>) tokenises each story, looks up norms for content words (stop words removed), computes the 25 measures, and runs every analysis. Effect sizes come with bootstrap or analytic 95% CIs. The classifier is logistic regression with grouped 5-fold CV by author. Similarity is TF-IDF cosine.</p>
-    <table id="featTable"><thead><tr><th>Measure</th><th>Definition</th></tr></thead><tbody></tbody></table>
-    <p><strong>Limitations, stated plainly.</strong></p>
+    <p><strong>The stories.</strong> The Hippocorpus (Sap, Horvitz, Choi, Smith &amp; Pennebaker, 2020, Microsoft Research): 6,854 stories, 1.8 million words, written by 3,640 online volunteers.</p>
+    <p><strong>The word lists.</strong> Three published lists where many people rated individual words: how concrete each word is (Brysbaert et al., 2014; 37,058 words), how much each word relates to each sense (Lancaster Sensorimotor Norms, Lynott et al., 2020; 39,707 words), and how pleasant and intense each word is (Warriner et al., 2013; 13,905 words).</p>
+    <p><strong>Nothing is invented.</strong> Every number on this page is calculated from these sources by a single Python script (<code>analysis/build.py</code>) that anyone can rerun.</p>
+    <p><strong>The 25 measures</strong>, as defined in the script:</p>
+    <table id="featTable"><thead><tr><th>Measure</th><th>What it means</th></tr></thead><tbody></tbody></table>
+    <p><strong>For researchers.</strong> Differences are reported as Cohen's <i>d</i> (paired <i>d<sub>z</sub></i> for same-event pairs) with 95% confidence intervals. Links are Spearman correlations. "Reliable" means p &lt; .01 (p &lt; .001 for the 720-cell grid). The model is a logistic regression with 5-fold cross-validation grouped by writer (AUC 0.69 on the 25 measures, 0.78 on all words). Similarity between tellings is TF-IDF cosine similarity. The map uses TF-IDF, then SVD (80 dimensions), then t-SNE; topics come from k-means (k = 16).</p>
+    <p><strong>Limits to keep in mind.</strong></p>
     <ul>
-      <li>Imagined stories were written from a summary, so this measures "imagining someone else's event as your own", not simulating one's own future. It is a close cousin of episodic simulation but not the same paradigm.</li>
-      <li>Word-norm averages are proxies for internal and external detail. They are not Autobiographical Interview scores and have not been validated against them here.</li>
-      <li>Authors are online crowdworkers aged 18–55+, and story length and effort differ by condition. Effect sizes are small (|d| ≤ 0.42) and should be read as such.</li>
-      <li>The "time since event" variable is restricted by design (recalled events were from roughly the last six months), so forgetting curves cannot be estimated properly.</li>
-      <li>Some prompt wording leaks into the text (e.g. "memorable event"), which slightly inflates text-based classification.</li>
+      <li>The made-up stories were written from someone else's summary. That's close to imagining a future event, but not the same thing.</li>
+      <li>The word measures are shortcuts. They haven't been checked against the hand-scoring methods researchers normally use.</li>
+      <li>The writers were online volunteers aged 18 to 55+. All the differences are small.</li>
+      <li>Real memories were all from the last six months or so, so this can't show how memories fade over years.</li>
+      <li>Some words from the writing instructions (like "memorable") ended up in the stories, which makes them slightly easier to tell apart by vocabulary alone.</li>
     </ul>
     <h3>References</h3>
     <ol class="refs">
@@ -329,8 +331,8 @@
 </section>
 
 <footer>
-  <p>An independent, exploratory project by <b style="color:var(--ink-2)">Ali Qureshi</b>, inspired by the research programme of the <a href="https://sites.harvard.edu/schacter-memory/home/research/">Schacter Memory Lab</a> at Harvard. Not affiliated with or endorsed by the lab.</p>
-  <p><a href="https://github.com/aliqureshi1206/the-same-machine">Source code &amp; analysis</a> · <a href="data.json">Download the computed data (JSON)</a></p>
+  <p>An independent project by <b style="color:var(--ink-2)">Ali Qureshi</b>, inspired by the research of the <a href="https://sites.harvard.edu/schacter-memory/home/research/">Schacter Memory Lab</a> at Harvard. Not affiliated with or endorsed by the lab.</p>
+  <p><a href="https://github.com/aliqureshi1206/the-same-machine">Code &amp; analysis</a> · <a href="data.json">Download the results (JSON)</a></p>
 </footer>
 
 <div class="tip" id="tip"></div>

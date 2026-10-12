@@ -168,31 +168,31 @@ F["continuity"] = [continuity(s) for s in st.story]
 df = pd.concat([st, F], axis=1)
 
 FEATS = {
-    "perceptual": ("Sensory strength", "Mean perceptual strength of content words (Lancaster norms, 0–5)"),
-    "concreteness": ("Concreteness", "Mean concreteness of content words (Brysbaert norms, 1–5)"),
-    "Visual": ("Visual", "Visual strength"),
-    "Auditory": ("Auditory", "Auditory strength"),
-    "Haptic": ("Touch", "Haptic strength"),
-    "Gustatory": ("Taste", "Gustatory strength"),
-    "Olfactory": ("Smell", "Olfactory strength"),
-    "Interoceptive": ("Body", "Interoceptive strength"),
-    "time": ("Time anchors", "Clock/calendar words per 100 words"),
-    "space": ("Place anchors", "Spatial/location words per 100 words"),
-    "numbers": ("Numerals", "Digits per 100 words"),
-    "properNouns": ("Proper nouns", "Mid-sentence capitalised words per 100"),
-    "rarity": ("Word rarity", "Negative mean log10 SUBTLEX frequency"),
-    "diversity": ("Lexical diversity", "Moving-average type/token ratio (w=50)"),
-    "cognitive": ("Thinking words", "Cognitive-process words per 100 words"),
-    "tentative": ("Hedges", "Tentative words per 100 words"),
-    "generic": ("Generalities", "Generic/semantic words per 100 words"),
-    "i": ("I / me / my", "First-person singular per 100 words"),
-    "we": ("We / us", "First-person plural per 100 words"),
-    "family": ("Family words", "Kin terms per 100 words"),
-    "valence": ("Valence", "Mean pleasantness (Warriner, 1–9)"),
-    "arousal": ("Arousal", "Mean arousal (Warriner, 1–9)"),
-    "continuity": ("Continuity", "Mean TF-IDF cosine between adjacent sentences"),
-    "words": ("Length", "Words per story"),
-    "sentLen": ("Sentence length", "Words per sentence"),
+    "perceptual": ("Sensory words", "How strongly the words call up the senses (sight, sound, touch, taste, smell, body)"),
+    "concreteness": ("Concrete words", "How much the words name things you can see or touch, like 'table' rather than 'idea'"),
+    "Visual": ("Sight", "How much the words call up seeing"),
+    "Auditory": ("Sound", "How much the words call up hearing"),
+    "Haptic": ("Touch", "How much the words call up touching"),
+    "Gustatory": ("Taste", "How much the words call up tasting"),
+    "Olfactory": ("Smell", "How much the words call up smelling"),
+    "Interoceptive": ("Body feelings", "How much the words call up inner body feelings, like 'hungry', 'tired', 'pain'"),
+    "time": ("Dates & times", "Words like 'Monday', 'June', 'morning', 'hour' (per 100 words)"),
+    "space": ("Places", "Words like 'room', 'kitchen', 'street', 'inside' (per 100 words)"),
+    "numbers": ("Numbers", "Written numbers like '3' or '2019' (per 100 words)"),
+    "properNouns": ("Names", "Names of people and places, like 'Sarah' or 'Boston' (per 100 words)"),
+    "rarity": ("Specific words", "How uncommon the words are, e.g. 'sedan' instead of 'car'"),
+    "diversity": ("Word variety", "How often the writer uses a new word instead of repeating one"),
+    "cognitive": ("Thinking words", "Words like 'think', 'know', 'realize', 'decide' (per 100 words)"),
+    "tentative": ("Unsure words", "Words like 'maybe', 'probably', 'guess' (per 100 words)"),
+    "generic": ("General statements", "Words like 'always', 'people', 'life', 'things' (per 100 words)"),
+    "i": ("I / me / my", "How often the writer talks about themselves (per 100 words)"),
+    "we": ("We / us", "How often the writer talks about a group they belong to (per 100 words)"),
+    "family": ("Family words", "Words like 'mom', 'son', 'wife' (per 100 words)"),
+    "valence": ("Positive tone", "How pleasant the words are, from 1 (unpleasant) to 9 (pleasant)"),
+    "arousal": ("Intensity", "How calm or exciting the words are, from 1 (calm) to 9 (intense)"),
+    "continuity": ("Flow", "How much each sentence repeats words from the one before"),
+    "words": ("Story length", "Number of words in the story"),
+    "sentLen": ("Sentence length", "Average number of words per sentence"),
 }
 FKEYS = list(FEATS)
 
@@ -295,6 +295,7 @@ final = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000, C=1.0)
 coefs = final[-1].coef_[0]
 out["classifier"] = {
     "aucFeatures": float(auc_feat), "aucText": float(auc_text),
+    "accFeatures": float(((oof >= 0.5) == y).mean()), "accText": float(((oof_t >= 0.5) == y).mean()),
     "coefs": sorted([{"key": k, "w": float(w)} for k, w in zip(FKEYS, coefs)], key=lambda c: c["w"]),
 }
 ri["pRec"] = oof
@@ -346,11 +347,11 @@ out["retell"]["deltas"].sort(key=lambda e: e["dz"])
 rp["drift"] = 1 - rp.sim
 rp["lenRatio"] = np.log2(rp.words_ret / rp.words_rec)
 pred = {}
-for v, lab in [("importance_rec", "Importance"), ("frequency_rec", "Rehearsal (how often recalled)"),
-               ("draining_rec", "Emotionally draining"), ("stressful_rec", "Stressful to write"),
-               ("openness_rec", "Openness"), ("annotatorAge_rec", "Age"),
-               ("logTimeSinceEvent_rec", "Time since event (log)"), ("words_rec", "Original length"),
-               ("perceptual_rec", "Original sensory strength")]:
+for v, lab in [("importance_rec", "How important the event was"), ("frequency_rec", "How often they think about it"),
+               ("draining_rec", "How emotionally draining"), ("stressful_rec", "How stressful to write"),
+               ("openness_rec", "Open-minded personality"), ("annotatorAge_rec", "Age of writer"),
+               ("logTimeSinceEvent_rec", "How long ago it happened"), ("words_rec", "Length of first telling"),
+               ("perceptual_rec", "Sensory detail in first telling")]:
     s = rp[[v, "drift"]].dropna()
     r, p = stats.spearmanr(s[v], s.drift)
     pred[v] = {"label": lab, "r": float(r), "p": float(p), "n": int(len(s))}
@@ -398,10 +399,10 @@ for k in ["perceptual", "concreteness", "time", "properNouns", "numbers", "cogni
 out["timeSince"] = tbo
 
 # ------------------------------------------------ 7. correlation matrix: language x self-report
-SELF = [("importance", "Importance"), ("frequency", "Rehearsal"), ("similarity", "Similar to own life"),
-        ("draining", "Draining"), ("stressful", "Stressful"), ("distracted", "Distracted"),
-        ("openness", "Openness"), ("annotatorAge", "Age"), ("logTimeSinceEvent", "Time since (log)"),
-        ("WorkTimeInSeconds", "Time on task")]
+SELF = [("importance", "Important to me"), ("frequency", "Think about it often"), ("similarity", "Like my own life"),
+        ("draining", "Draining to write"), ("stressful", "Stressful to write"), ("distracted", "Distracted"),
+        ("openness", "Open-minded"), ("annotatorAge", "Age"), ("logTimeSinceEvent", "How long ago"),
+        ("WorkTimeInSeconds", "Time spent writing")]
 CM = ["perceptual", "concreteness", "Visual", "Auditory", "Haptic", "Gustatory", "Olfactory", "Interoceptive",
       "time", "space", "numbers", "properNouns", "rarity", "diversity", "cognitive", "tentative", "generic",
       "i", "we", "family", "valence", "arousal", "continuity", "words"]

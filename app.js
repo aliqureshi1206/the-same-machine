@@ -4,12 +4,12 @@
   const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
   const C = { recalled: css("--rec"), imagined: css("--img"), retold: css("--ret") };
   const G = ["recalled", "imagined", "retold"];
-  const GL = { recalled: "Recalled", imagined: "Imagined", retold: "Retold" };
+  const GL = { recalled: "Remembered", imagined: "Imagined", retold: "Retold" };
   const MUTED = css("--muted"), GRID = css("--grid"), AXIS = css("--axis"), INK2 = css("--ink-2"), MID = css("--mid");
   const F = D.features;
   const fmt = d3.format(",");
   const f2 = d3.format(".2f"), f3 = d3.format(".3f");
-  const pfmt = (p) => (p < 0.001 ? "p < .001" : "p = " + d3.format(".3f")(p).replace(/^0/, ""));
+  const pfmt = (p) => { const ps = p < 0.001 ? "p < .001" : "p = " + d3.format(".3f")(p).replace(/^0/, ""); return (p < 0.001 ? "Yes, very" : p < 0.01 ? "Yes" : p < 0.05 ? "Weak" : "No") + ` <span style="color:var(--muted)">(${ps})</span>`; };
   const signed = (v, f = f2) => (v > 0 ? "+" : v < 0 ? "−" : "") + f(Math.abs(v));
 
   /* ---------- tooltip ---------- */
@@ -63,11 +63,11 @@
   const M = D.meta;
   const normTotal = M.normWords.concreteness + M.normWords.lancaster + M.normWords.warriner;
   document.getElementById("strip").innerHTML = [
-    [fmt(M.n), "stories: remembered, imagined and retold"],
-    [(M.words / 1e6).toFixed(2) + "M", "words analysed"],
-    [fmt(M.workers), "authors"],
-    [fmt(Math.round(normTotal / 1000)) + "k", "human-rated word norms across 3 datasets"],
-    ["25", "language measures · 720 correlations"],
+    [fmt(M.n), "stories: remembered, made up or retold"],
+    [(M.words / 1e6).toFixed(1) + " million", "words analysed"],
+    [fmt(M.workers), "people who wrote them"],
+    [fmt(Math.round(normTotal / 1000)) + "k", "words rated by people, from 3 published lists"],
+    ["25", "ways of measuring each story"],
   ].map(([n, l]) => `<div><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
 
   /* =========================================================== HERO */
@@ -152,13 +152,13 @@
       rev.innerHTML = `<div class="verdict">${ok ? "Correct." : "Not quite."} This was <span class="${r.g === "recalled" ? "rec" : "img"}">${r.g === "recalled" ? "a real memory" : "imagined"}</span>.</div>
         <div class="reveal-grid">
           <div>
-            <div class="panel-title">Model's read: ${Math.round(r.p * 100)}% likely a real memory ${mok ? "(right)" : "(fooled)"}</div>
+            <div class="panel-title">Computer's guess: ${Math.round(r.p * 100)}% chance it's real. ${mok ? "It got this one right." : "It got this one wrong."}</div>
             <div class="meter"><i style="left:${r.p * 100}%"></i></div>
-            <div class="meter-l"><span>reads imagined</span><span>reads remembered</span></div>
-            <p class="panel-note" style="margin-top:14px">Main event, in the author's words: <i>${(r.e || "").replace(/</g, "&lt;")}</i></p>
+            <div class="meter-l"><span>sounds made up</span><span>sounds real</span></div>
+            <p class="panel-note" style="margin-top:14px">What the story is about, in the writer's words: <i>${(r.e || "").replace(/</g, "&lt;")}</i></p>
           </div>
           <div>
-            <div class="panel-title">This story vs. the corpus (percentile)</div>
+            <div class="panel-title">This story compared with all stories <span style="color:var(--muted);font-weight:400">(middle line = average)</span></div>
             ${FK.map((k) => { const p = pct(k, r.f[k]); return `<div class="fbar"><span>${F[k].label}</span><span class="track"><u></u><i style="width:${p}%"></i></span></div>`; }).join("")}
           </div>
         </div>
@@ -171,7 +171,7 @@
       const n = rounds.length;
       root.innerHTML = `<div class="card">
         <div class="verdict" style="font-size:30px">You scored ${you}/${n}. The model scored ${model}/${n}.</div>
-        <p style="color:var(--ink-2);font-size:15px">People are usually close to chance at this task. On these 12 excerpts the model leans on the same cues as the rest of this page: specific anchors (dates, numbers, names) and the absence of thinking out loud. Across all 5,535 recalled and imagined stories it is right only about two times in three. Memory and imagination really are hard to tell apart, which is the point.</p>
+        <p style="color:var(--ink-2);font-size:15px">Most people do only a little better than flipping a coin at this. The computer looks for the same clues described on this page: real memories have more specific details (dates, numbers, names), and made-up stories have more "thinking out loud". Across all 5,535 real and made-up stories, it is right only ${Math.round(D.classifier.accFeatures * 100)}% of the time. Real memories and made-up stories really are hard to tell apart, and that is the point.</p>
         <div class="game-btns"><button class="gbtn" id="again">Play again with new stories</button><a class="gbtn next" href="#signature" style="text-decoration:none">See the evidence ↓</a></div></div>`;
       root.querySelector("#again").addEventListener("click", () => {
         d3.shuffle(D.game);
@@ -203,22 +203,22 @@
     svg.append("line").attr("class", "zero").attr("x1", x(0)).attr("x2", x(0)).attr("y1", m.t - 8).attr("y2", H - m.b);
     // shaded small-effect band
     svg.append("rect").attr("x", x(-0.2)).attr("width", x(0.2) - x(-0.2)).attr("y", m.t - 8).attr("height", H - m.b - m.t + 8).attr("fill", "#ffffff05");
-    if (!narrow) svg.append("text").attr("class", "lbl-m").attr("x", x(0.2) - 4).attr("y", m.t - 14).attr("text-anchor", "end").text("small effect zone");
-    svg.append("text").attr("class", "lbl-b").attr("x", W - m.r).attr("y", 14).attr("text-anchor", "end").attr("fill", C.recalled).text(narrow ? "memory →" : "more in real memories →");
-    svg.append("text").attr("class", "lbl-b").attr("x", m.l).attr("y", 14).attr("fill", C.imagined).text(narrow ? "← imagination" : "← more in imagined stories");
+    if (!narrow) svg.append("text").attr("class", "lbl-m").attr("x", x(0.2) - 4).attr("y", m.t - 14).attr("text-anchor", "end").text("small differences");
+    svg.append("text").attr("class", "lbl-b").attr("x", W - m.r).attr("y", 14).attr("text-anchor", "end").attr("fill", C.recalled).text(narrow ? "real →" : "more in real memories →");
+    svg.append("text").attr("class", "lbl-b").attr("x", m.l).attr("y", 14).attr("fill", C.imagined).text(narrow ? "← made up" : "← more in made-up stories");
     const g = svg.selectAll(".r").data(rows, (d) => d.key).join("g").attr("transform", (d) => `translate(0,${y(d.key) + y.bandwidth() / 2})`);
     g.append("text").attr("class", "lbl").attr("x", m.l - 12).attr("text-anchor", "end").attr("dy", "0.35em").text((d) => F[d.key].label);
     g.append("line").attr("x1", (d) => x(Math.max(-0.5, d.lo))).attr("x2", (d) => x(Math.min(0.5, d.hi))).attr("stroke", (d) => (d.d > 0 ? C.recalled : C.imagined)).attr("stroke-width", 2).attr("stroke-linecap", "round").attr("opacity", 0.55);
     g.append("circle").attr("cx", (d) => x(d.d)).attr("r", 5.5).attr("fill", (d) => (d.d > 0 ? C.recalled : C.imagined)).attr("stroke", css("--surface")).attr("stroke-width", 2)
       .attr("opacity", (d) => (d.lo > 0 || d.hi < 0 ? 1 : 0.35));
-    if (!narrow) g.append("text").attr("class", "lbl-m").attr("x", W - m.r + 14).attr("dy", "0.35em").text((d) => `d ${signed(d.d)}  ${pfmt(d.p)}`);
+    if (!narrow) g.append("text").attr("class", "lbl-m").attr("x", W - m.r + 14).attr("dy", "0.35em").attr("opacity", (d) => (d.lo > 0 || d.hi < 0 ? 1 : 0.5)).text((d) => signed(d.d));
     g.append("rect").attr("x", 0).attr("width", W).attr("y", -rh / 2).attr("height", rh).attr("fill", "transparent")
       .on("mousemove", (ev, d) => {
         const mm = d.means;
         showTip(`<b>${F[d.key].label}</b><div style="color:var(--muted);margin-bottom:6px">${F[d.key].desc}</div>
-          <div class="row"><span>${effMode === "ind" ? "Cohen's d" : "Paired d<sub>z</sub>"}</span><b>${signed(d.d)} [${f2(d.lo)}, ${f2(d.hi)}]</b></div>
-          <div class="row"><span>Significance</span><span>${pfmt(d.p)}</span></div>
-          ${G.map((k) => `<div class="row"><span><i class="sw ${k.slice(0, 3)}"></i>${GL[k]} mean</span><span>${f3(mm[k][0])}</span></div>`).join("")}`, ev);
+          <div class="row"><span>Size of difference</span><b>${signed(d.d)}</b></div>
+          <div class="row"><span>Reliable difference?</span><span>${pfmt(d.p)}</span></div>
+          ${G.map((k) => `<div class="row"><span><i class="sw ${k.slice(0, 3)}"></i>${GL[k]} average</span><span>${f3(mm[k][0])}</span></div>`).join("")}`, ev);
       })
       .on("mouseleave", hideTip);
   });
@@ -243,10 +243,11 @@
       svg.append("text").attr("class", "lbl").attr("x", m.l - 14).attr("y", cy).attr("dy", "0.35em").attr("text-anchor", "end").text(names[md]);
       G.forEach((g) => {
         svg.append("circle").attr("cx", x(D.fingerprint[g][md])).attr("cy", cy).attr("r", 7).attr("fill", C[g]).attr("stroke", css("--surface")).attr("stroke-width", 2)
-          .on("mousemove", (ev) => showTip(`<b>${names[md]}</b> · ${GL[g]}<div class="row"><span>z vs. all stories</span><b>${signed(D.fingerprint[g][md], f3)}</b></div>`, ev)).on("mouseleave", hideTip);
+          .on("mousemove", (ev) => showTip(`<b>${names[md]}</b> · ${GL[g]}<div class="row"><span>Compared with the average story</span><b>${D.fingerprint[g][md] >= 0 ? "more" : "less"} (${signed(D.fingerprint[g][md])})</b></div>`, ev)).on("mouseleave", hideTip);
       });
     });
-    svg.append("text").attr("class", "lbl-m").attr("x", W - m.r).attr("y", H - 4).attr("text-anchor", "end").text("standardised mean (z) →");
+    svg.append("text").attr("class", "lbl-m").attr("x", W - m.r).attr("y", H - 4).attr("text-anchor", "end").text("more than average →");
+    svg.append("text").attr("class", "lbl-m").attr("x", m.l).attr("y", H - 4).text("← less than average");
   });
 
   /* =========================================================== DISTRIBUTIONS */
@@ -275,7 +276,7 @@
       svg.append("line").attr("x1", x(mu)).attr("x2", x(mu)).attr("y1", m.t + 14).attr("y2", H - m.b).attr("stroke", C[g]).attr("stroke-width", 1).attr("opacity", 0.8);
     });
     svg.append("text").attr("class", "lbl-m").attr("x", W - m.r).attr("y", m.t + 4).attr("text-anchor", "end")
-      .text(`${F[distK].desc} · d (rec − img) = ${signed(eff.d)}`);
+      .text(F[distK].desc);
     // hover crosshair
     const hl = svg.append("line").attr("stroke", INK2).attr("y1", m.t).attr("y2", H - m.b).attr("opacity", 0);
     svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", H - m.t - m.b).attr("fill", "transparent")
@@ -283,7 +284,7 @@
         const [mx] = d3.pointer(ev);
         const i = Math.max(0, Math.min(mids.length - 1, d3.bisectCenter(mids, x.invert(mx))));
         hl.attr("x1", x(mids[i])).attr("x2", x(mids[i])).attr("opacity", 0.6);
-        showTip(`<b>${F[distK].label} ≈ ${f2(mids[i])}</b>${G.map((g) => `<div class="row"><span><i class="sw ${g.slice(0, 3)}"></i>${GL[g]}</span><span>${f3(d[g][i])}</span></div>`).join("")}<div style="color:var(--muted);margin-top:4px">density · thin lines mark means</div>`, ev);
+        showTip(`<b>${F[distK].label} ≈ ${f2(mids[i])}</b>${G.map((g) => `<div class="row"><span><i class="sw ${g.slice(0, 3)}"></i>${GL[g]}</span><span>${f3(d[g][i])}</span></div>`).join("")}<div style="color:var(--muted);margin-top:4px">higher = more stories have this score</div>`, ev);
       })
       .on("mouseleave", () => { hl.attr("opacity", 0); hideTip(); });
   });
@@ -301,14 +302,14 @@
     const half = W / 2, gap = isNarrow() ? 16 : 70;
     const zmax = d3.max([...R, ...I], (d) => Math.abs(d.z));
     const xl = d3.scaleLinear().domain([0, zmax]).range([0, half - gap / 2 - 82]);
-    svg.append("text").attr("class", "lbl-b").attr("x", half - gap / 2).attr("y", 14).attr("text-anchor", "end").attr("fill", C.imagined).text("Imagined stories say…");
+    svg.append("text").attr("class", "lbl-b").attr("x", half - gap / 2).attr("y", 14).attr("text-anchor", "end").attr("fill", C.imagined).text("Made-up stories say…");
     svg.append("text").attr("class", "lbl-b").attr("x", half + gap / 2).attr("y", 14).attr("fill", C.recalled).text("…real memories say");
     const draw = (arr, side) => arr.forEach((d, i) => {
       const cy = m.t + i * rh;
       const w = xl(Math.abs(d.z));
       const xx = side < 0 ? half - gap / 2 - w : half + gap / 2;
       svg.append("rect").attr("x", xx).attr("y", cy + 3).attr("width", Math.max(w, 1)).attr("height", rh - 7).attr("rx", 3).attr("fill", side < 0 ? C.imagined : C.recalled).attr("opacity", 0.85)
-        .on("mousemove", (ev) => showTip(`<b>“${d.w}”</b><div class="row"><span>log-odds z</span><b>${signed(d.z)}</b></div><div class="row"><span>uses in corpus</span><span>${fmt(d.f)}</span></div>`, ev)).on("mouseleave", hideTip);
+        .on("mousemove", (ev) => showTip(`<b>“${d.w}”</b><div class="row"><span>How typical of this type</span><b>${f2(Math.abs(d.z))}</b></div><div class="row"><span>Times used in all stories</span><span>${fmt(d.f)}</span></div>`, ev)).on("mouseleave", hideTip);
       svg.append("text").attr("class", "lbl").attr("x", side < 0 ? xx - 6 : xx + w + 6).attr("y", cy + rh / 2).attr("dy", "0.3em").attr("text-anchor", side < 0 ? "end" : "start").text(d.w);
     });
     draw(I, -1); draw(R, 1);
@@ -404,9 +405,9 @@
       if (s === step) return;
       from = step; step = s; tStart = performance.now(); requestAnimationFrame(animate);
       const lg = document.getElementById("mapLegend");
-      lg.innerHTML = s === 1 ? `<span><i class="sw rec"></i>Recalled</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold</span>`
-        : s === 3 ? `<span>reads imagined</span><span class="grad"></span><span>reads remembered</span>`
-        : s === 4 ? `<span>Label: concreteness gap, d (recalled − imagined)</span>` : `<span>${fmt(pts.length)} stories</span>`;
+      lg.innerHTML = s === 1 ? `<span><i class="sw rec"></i>Remembered</span><span><i class="sw img"></i>Imagined</span><span><i class="sw ret"></i>Retold</span>`
+        : s === 3 ? `<span>sounds made up</span><span class="grad"></span><span>sounds real</span>`
+        : s === 4 ? `<span>Number = how much more concrete the real stories are than the made-up ones</span>` : `<span>${fmt(pts.length)} stories</span>`;
     }
     setStep(0); document.getElementById("mapLegend").innerHTML = `<span>${fmt(pts.length)} stories</span>`; draw(1);
     const steps = document.querySelectorAll("#scrolly .step");
@@ -422,7 +423,7 @@
       const t = topics[f[3]];
       showTip(`<b>${(f[5] || "(no description)").replace(/</g, "&lt;")}</b>
         <div class="row" style="margin-top:6px"><span><i class="sw ${["rec", "img", "ret"][f[2]]}"></i>${GL[G[f[2]]]}</span><span>${t.name}</span></div>
-        <div class="row"><span>Model: real-memory likelihood</span><b>${Math.round(f[4] * 100)}%</b></div>`, ev);
+        <div class="row"><span>Computer's guess: chance it's real</span><b>${Math.round(f[4] * 100)}%</b></div>`, ev);
       draw(1);
     });
     cv.addEventListener("mouseleave", () => { hover = -1; hideTip(); draw(1); });
@@ -440,14 +441,14 @@
     const cw = (W - m.l - m.r - mixW - 20) / cols.length;
     const col = d3.scaleDiverging().domain([-0.6, 0, 0.6]).interpolator((t) => (t < 0.5 ? d3.interpolateRgb(C.imagined, MID)(t * 2) : d3.interpolateRgb(MID, C.recalled)((t - 0.5) * 2))).clamp(true);
     cols.forEach((k, j) => svg.append("text").attr("class", "lbl-m").attr("x", m.l + j * cw + cw / 2).attr("y", m.t - 12).attr("text-anchor", "middle").text(narrow ? F[k].label.split(" ")[0] : F[k].label));
-    svg.append("text").attr("class", "lbl-m").attr("x", W - m.r - mixW).attr("y", m.t - 12).text("mix (n)");
+    svg.append("text").attr("class", "lbl-m").attr("x", W - m.r - mixW).attr("y", m.t - 12).text("story mix");
     rows.forEach((t, i) => {
       const y = m.t + i * rh;
       svg.append("text").attr("class", "lbl").attr("x", m.l - 10).attr("y", y + rh / 2).attr("dy", "0.35em").attr("text-anchor", "end").text(t.name);
       cols.forEach((k, j) => {
         const v = t.gap[k];
         svg.append("rect").attr("x", m.l + j * cw + 1).attr("y", y + 1).attr("width", cw - 2).attr("height", rh - 2).attr("rx", 4).attr("fill", col(v))
-          .on("mousemove", (ev) => showTip(`<b>${t.name}</b> · ${F[k].label}<div class="row"><span>d (recalled − imagined)</span><b>${signed(v)}</b></div><div class="row"><span>stories in topic</span><span>${fmt(t.n)}</span></div><div style="color:var(--muted);margin-top:4px">top terms: ${t.terms.slice(0, 6).join(", ")}</div>`, ev)).on("mouseleave", hideTip);
+          .on("mousemove", (ev) => showTip(`<b>${t.name}</b> · ${F[k].label}<div class="row"><span>Difference</span><b>${signed(v)}</b></div><div style="color:var(--muted)">${v >= 0 ? "more in real memories" : "more in made-up stories"}</div><div class="row"><span>Stories in this topic</span><span>${fmt(t.n)}</span></div><div style="color:var(--muted);margin-top:4px">Common words: ${t.terms.slice(0, 6).join(", ")}</div>`, ev)).on("mouseleave", hideTip);
         if (!narrow || Math.abs(v) > 0.3) svg.append("text").attr("x", m.l + j * cw + cw / 2).attr("y", y + rh / 2).attr("dy", "0.35em").attr("text-anchor", "middle").attr("fill", "#f4f3ee").attr("font-size", 11).attr("pointer-events", "none").text(signed(v));
       });
       let x0 = W - m.r - mixW;
@@ -477,9 +478,9 @@
       svg.append("path").attr("d", d3.line().x((p) => x(p[0])).y((p) => y(p[1])).curve(d3.curveBasis)(pts)).attr("fill", "none").attr("stroke", c).attr("stroke-width", 2);
       const md = D.retell.simMedian[k];
       svg.append("line").attr("x1", x(md)).attr("x2", x(md)).attr("y1", m.t + 20).attr("y2", H - m.b).attr("stroke", c).attr("stroke-width", 1);
-      svg.append("text").attr("class", "lbl-m").attr("x", x(md) + 4).attr("y", m.t + 26).text("median " + f2(md));
+      svg.append("text").attr("class", "lbl-m").attr("x", x(md) + 4).attr("y", m.t + 26).text("typical: " + f2(md));
     });
-    svg.append("text").attr("class", "lbl-m").attr("x", W - m.r).attr("y", H - 4).attr("text-anchor", "end").text("cosine similarity →");
+    svg.append("text").attr("class", "lbl-m").attr("x", W - m.r).attr("y", H - 4).attr("text-anchor", "end").text("more shared wording →");
   });
 
   function ciChart(id, obj, xlab) {
@@ -492,17 +493,18 @@
       svg.append("g").attr("class", "gridline").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r))).selectAll("text").attr("class", "lbl-m");
       svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickSizeOuter(0)).selectAll("text").attr("class", "lbl-m");
       svg.append("text").attr("class", "lbl-m").attr("x", (m.l + W - m.r) / 2).attr("y", H - 4).attr("text-anchor", "middle").text(xlab);
+      svg.append("text").attr("class", "lbl-m").attr("transform", `translate(11,${(m.t + H - m.b) / 2}) rotate(-90)`).attr("text-anchor", "middle").text("amount of change");
       svg.append("path").attr("d", d3.line().x((k) => x(k)).y((k) => y(obj[k][0]))(ks)).attr("fill", "none").attr("stroke", C.retold).attr("stroke-width", 2);
       ks.forEach((k) => {
         const [mu, lo, hi] = obj[k];
         svg.append("line").attr("x1", x(k)).attr("x2", x(k)).attr("y1", y(lo)).attr("y2", y(hi)).attr("stroke", C.retold).attr("stroke-width", 2).attr("opacity", 0.5).attr("stroke-linecap", "round");
         svg.append("circle").attr("cx", x(k)).attr("cy", y(mu)).attr("r", 6).attr("fill", C.retold).attr("stroke", css("--surface")).attr("stroke-width", 2)
-          .on("mousemove", (ev) => showTip(`<b>${xlab} = ${k}</b><div class="row"><span>mean drift</span><b>${f3(mu)}</b></div><div class="row"><span>95% CI</span><span>${f3(lo)}–${f3(hi)}</span></div>`, ev)).on("mouseleave", hideTip);
+          .on("mousemove", (ev) => showTip(`<b>${xlab} = ${k}</b><div class="row"><span>Average amount of change</span><b>${f2(mu)}</b></div><div class="row"><span>Margin of error</span><span>${f2(lo)} to ${f2(hi)}</span></div><div style="color:var(--muted);margin-top:4px">0 = identical wording, 1 = nothing in common</div>`, ev)).on("mouseleave", hideTip);
       });
     });
   }
-  ciChart("driftFreq", D.retell.driftByFreq, "How often recalled / talked about (1–5)");
-  ciChart("driftImp", D.retell.driftByImportance, "Importance (1–5)");
+  ciChart("driftFreq", D.retell.driftByFreq, "How often they think about it (1–5)");
+  ciChart("driftImp", D.retell.driftByImportance, "How important it was (1–5)");
 
   function barChart(id, rows, opts) {
     chart(id, (el, W) => {
@@ -519,21 +521,21 @@
         const x0 = x(Math.min(0, r.v)), w = Math.abs(x(r.v) - x(0));
         svg.append("rect").attr("x", x0).attr("y", y + 5).attr("width", Math.max(w, 1)).attr("height", rh - 10).attr("rx", 3)
           .attr("fill", opts.color(r)).attr("opacity", r.p < 0.01 ? 1 : 0.3)
-          .on("mousemove", (ev) => showTip(`<b>${r.label}</b><div class="row"><span>${opts.stat}</span><b>${signed(r.v, f3)}</b></div><div class="row"><span>significance</span><span>${pfmt(r.p)}</span></div>${r.extra || ""}`, ev)).on("mouseleave", hideTip);
+          .on("mousemove", (ev) => showTip(`<b>${r.label}</b><div class="row"><span>${opts.stat}</span><b>${signed(r.v, f3)}</b></div><div class="row"><span>Reliable?</span><span>${pfmt(r.p)}</span></div>${r.extra || ""}`, ev)).on("mouseleave", hideTip);
         svg.append("text").attr("class", "lbl-m").attr("x", r.v >= 0 ? x(r.v) + 6 : x(r.v) - 6).attr("y", y + rh / 2).attr("dy", "0.35em").attr("text-anchor", r.v >= 0 ? "start" : "end").text(signed(r.v));
       });
     });
   }
-  const dp = Object.values(D.retell.driftPredictors).map((d) => ({ label: d.label, v: d.r, p: d.p, extra: `<div class="row"><span>n pairs</span><span>${fmt(d.n)}</span></div>` })).sort((a, b) => b.v - a.v);
-  barChart("driftPred", dp, { stat: "Spearman ρ", color: (r) => (r.v >= 0 ? C.retold : "#8a8983") });
-  const rd = D.retell.deltas.map((d) => ({ label: F[d.key].label, v: d.dz, p: d.p, extra: `<div class="row"><span>pairs where it rose</span><span>${Math.round(d.pctUp * 100)}%</span></div>` })).sort((a, b) => a.v - b.v);
-  barChart("retDelta", rd, { stat: "d<sub>z</sub> (retold − original)", color: (r) => (r.v >= 0 ? C.retold : "#8a8983") });
+  const dp = Object.values(D.retell.driftPredictors).map((d) => ({ label: d.label, v: d.r, p: d.p, extra: `<div class="row"><span>People</span><span>${fmt(d.n)}</span></div>` })).sort((a, b) => b.v - a.v);
+  barChart("driftPred", dp, { stat: "Strength of link (−1 to +1)", color: (r) => (r.v >= 0 ? C.retold : "#8a8983") });
+  const rd = D.retell.deltas.map((d) => ({ label: F[d.key].label, v: d.dz, p: d.p, extra: `<div class="row"><span>Second tellings with more of this</span><span>${Math.round(d.pctUp * 100)}%</span></div>` })).sort((a, b) => a.v - b.v);
+  barChart("retDelta", rd, { stat: "Change from first to second telling", color: (r) => (r.v >= 0 ? C.retold : "#8a8983") });
 
   const ps = D.retell.pRecShift;
   document.getElementById("retTiles").innerHTML = `
-    <div class="tile"><div class="n ret">${fmt(D.retell.n)}</div><div class="l">matched memory–retelling pairs, same author and same event</div></div>
-    <div class="tile"><div class="n">${Math.round(ps.pctMoreImagined * 100)}%</div><div class="l">of retellings read <b>less like a memory</b> than the original, according to a model never trained on retellings</div><div class="s">mean model score ${f3(ps.original[0])} → ${f3(ps.retold[0])}</div></div>
-    <div class="tile"><div class="n">${f2(D.retell.driftPredictors.perceptual_rec.r).replace("-", "−")}</div><div class="l">correlation between initial sensory richness and later drift. Vivid encodings are the most stable.</div></div>`;
+    <div class="tile"><div class="n ret">${fmt(D.retell.n)}</div><div class="l">people who told the same memory twice, months apart</div></div>
+    <div class="tile"><div class="n">${Math.round(ps.pctMoreImagined * 100)}%</div><div class="l">of second tellings sounded <b>more made up</b> than the first telling, according to the computer model</div></div>
+    <div class="tile"><div class="n">#1</div><div class="l">Sensory detail in the first telling was the <b>strongest sign</b> that a memory would stay the same</div></div>`;
 
   /* =========================================================== AGE */
   (function ageGrid() {
@@ -546,7 +548,7 @@
       div.className = "card";
       const mdl = D.age.series[k].model;
       const par = mdl.interactionP >= 0.05;
-      div.innerHTML = `<div class="panel-title">${F[k].label}</div><div class="panel-note">age slope ${signed(mdl.ageSlope)} SD/decade (${pfmt(mdl.ageSlopeP)}) · interaction ${pfmt(mdl.interactionP)} ${par ? "· <span style='color:var(--ink-2)'>parallel</span>" : "· <span style='color:var(--gold)'>diverges</span>"}</div><div class="chart" id="age_${k}"></div>`;
+      div.innerHTML = `<div class="panel-title">${F[k].label}</div><div class="panel-note">${par ? "<span style='color:var(--ink-2)'>✓ Lines move together</span>" : "<span style='color:var(--gold)'>✕ Lines move differently</span>"}</div><div class="chart" id="age_${k}"></div>`;
       host.appendChild(div);
       chart("age_" + k, (el, W) => {
         const H = 170, m = { t: 12, r: 8, b: 24, l: 38 };
@@ -594,7 +596,7 @@
         const rect = svg.append("rect").attr("x", m.l + j * cw + 1).attr("y", y + 1).attr("width", cw - 2).attr("height", rh - 2).attr("rx", 3);
         if (!v) { rect.attr("fill", "#1c1c20"); return; }
         rect.attr("fill", divCol(v[0])).attr("opacity", v[1] < 0.001 ? 1 : 0.28)
-          .on("mousemove", (ev) => showTip(`<b>${F[rk].label}</b> × <b>${cl}</b><div style="color:var(--muted)">${GL[corrG]} stories</div><div class="row"><span>Spearman ρ</span><b>${signed(v[0], f3)}</b></div><div class="row"><span>significance</span><span>${pfmt(v[1])}</span></div><div class="row"><span>n</span><span>${fmt(v[2])}</span></div>`, ev))
+          .on("mousemove", (ev) => showTip(`<b>${F[rk].label}</b> × <b>${cl}</b><div style="color:var(--muted)">${GL[corrG]} stories</div><div class="row"><span>Strength of link (−1 to +1)</span><b>${signed(v[0])}</b></div><div class="row"><span>Reliable?</span><span>${pfmt(v[1])}</span></div><div class="row"><span>Stories</span><span>${fmt(v[2])}</span></div>`, ev))
           .on("mouseleave", hideTip);
         if (!narrow && v[1] < 0.001 && Math.abs(v[0]) >= 0.1) svg.append("text").attr("x", m.l + j * cw + cw / 2).attr("y", y + rh / 2).attr("dy", "0.35em").attr("text-anchor", "middle").attr("font-size", 10).attr("fill", "#f4f3ee").attr("pointer-events", "none").text(signed(v[0]).replace("0.", "."));
       });
@@ -608,7 +610,7 @@
     svg.append("text").attr("class", "lbl-m").attr("x", lx + lw / 2).attr("y", ly + 22).attr("text-anchor", "middle").text("0");
     svg.append("text").attr("class", "lbl-m").attr("x", lx + lw).attr("y", ly + 22).attr("text-anchor", "end").text("+.35");
     const nsig = data.flat().filter((v) => v && v[1] < 0.001).length;
-    svg.append("text").attr("class", "lbl-m").attr("x", m.l).attr("y", ly + 8).text(`${nsig} of ${rows.length * cols.length} cells significant at p < .001`);
+    svg.append("text").attr("class", "lbl-m").attr("x", m.l).attr("y", ly + 8).text(`${nsig} of ${rows.length * cols.length} squares show a reliable link`);
   });
   document.querySelectorAll("#corrToggle button").forEach((b) => b.addEventListener("click", () => {
     document.querySelectorAll("#corrToggle button").forEach((x) => x.classList.toggle("on", x === b));
@@ -630,7 +632,7 @@
         const v = Mx[i][j];
         svg.append("rect").attr("x", m.l + j * cs + 1).attr("y", m.t + i * cs + 1).attr("width", cs - 2).attr("height", cs - 2).attr("rx", 2)
           .attr("fill", i === j ? "#2a2a2f" : col(v))
-          .on("mousemove", (ev) => i !== j && showTip(`<b>${F[K[i]].label}</b> × <b>${F[K[j]].label}</b><div class="row"><span>Spearman ρ</span><b>${signed(v, f3)}</b></div><div class="row"><span>n</span><span>${fmt(D.meta.n)}</span></div>`, ev))
+          .on("mousemove", (ev) => i !== j && showTip(`<b>${F[K[i]].label}</b> × <b>${F[K[j]].label}</b><div class="row"><span>Strength of link (−1 to +1)</span><b>${signed(v)}</b></div>`, ev))
           .on("mouseleave", hideTip);
       }
     }
@@ -644,7 +646,7 @@
     const y = d3.scaleLinear().domain([0, d3.max(vals) * 1.15]).nice().range([H - m.b, m.t]);
     svg.append("g").attr("class", "gridline").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5, "%").tickSize(-(W - m.l - m.r))).selectAll("text").attr("class", "lbl-m");
     svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues([0, 9]).tickFormat((d) => (d === 0 ? "start" : "end")).tickSizeOuter(0)).selectAll("text").attr("class", "lbl-m");
-    svg.append("text").attr("class", "lbl-m").attr("x", (m.l + W - m.r) / 2).attr("y", H - 6).attr("text-anchor", "middle").text("position in story (deciles)");
+    svg.append("text").attr("class", "lbl-m").attr("x", (m.l + W - m.r) / 2).attr("y", H - 6).attr("text-anchor", "middle").text("position in the story");
     G.forEach((g) => {
       const v = D.eventArc[g].minorBin;
       svg.append("path").attr("d", d3.line().x((_, i) => x(i)).y((d) => y(d)).curve(d3.curveMonotoneX)(v)).attr("fill", "none").attr("stroke", C[g]).attr("stroke-width", 2);
@@ -655,15 +657,15 @@
         const i = Math.round(x.invert(d3.pointer(ev)[0]));
         const ii = Math.max(0, Math.min(9, i));
         hl.attr("x1", x(ii)).attr("x2", x(ii)).attr("opacity", 0.5);
-        showTip(`<b>Decile ${ii + 1} of story</b>${G.map((g) => `<div class="row"><span><i class="sw ${g.slice(0, 3)}"></i>${GL[g]}</span><span>${d3.format(".1%")(D.eventArc[g].minorBin[ii])}</span></div>`).join("")}`, ev);
+        showTip(`<b>Part ${ii + 1} of 10 of the story</b>${G.map((g) => `<div class="row"><span><i class="sw ${g.slice(0, 3)}"></i>${GL[g]}</span><span>${d3.format(".1%")(D.eventArc[g].minorBin[ii])}</span></div>`).join("")}`, ev);
       })
       .on("mouseleave", () => { hl.attr("opacity", 0); hideTip(); });
   });
 
   document.getElementById("clfTiles").innerHTML = `
-    <div class="tile"><div class="n">${f2(D.classifier.aucFeatures)}</div><div class="l">AUC from 25 interpretable measures</div><div class="s">logistic regression · grouped 5-fold CV</div></div>
-    <div class="tile"><div class="n">${f2(D.classifier.aucText)}</div><div class="l">AUC from the full vocabulary (unigrams + bigrams)</div><div class="s">upper bound: includes prompt leakage</div></div>
-    <div class="tile"><div class="n">0.50</div><div class="l">chance. Most of the signal is there, but faint.</div><div class="s">1.00 would be perfect separation</div></div>`;
+    <div class="tile"><div class="n">${Math.round(D.classifier.accFeatures * 100)}%</div><div class="l">right, using only the 25 measures on this page</div></div>
+    <div class="tile"><div class="n">${Math.round(D.classifier.accText * 100)}%</div><div class="l">right, using every word in the story</div><div class="s">a little inflated by words from the instructions</div></div>
+    <div class="tile"><div class="n">50%</div><div class="l">what you'd get by flipping a coin</div></div>`;
 
   chart("pRecHist", (el, W) => {
     const H = 220, m = { t: 14, r: 16, b: 40, l: 16 };
@@ -672,7 +674,7 @@
     const mids = d3.range(25).map((i) => (i + 0.5) / 25);
     const y = d3.scaleLinear().domain([0, d3.max(G, (g) => d3.max(D.pRecHist[g])) * 1.08]).range([H - m.b, m.t]);
     svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(5, "%").tickSizeOuter(0)).selectAll("text").attr("class", "lbl-m");
-    svg.append("text").attr("class", "lbl-m").attr("x", (m.l + W - m.r) / 2).attr("y", H - 6).attr("text-anchor", "middle").text("model's estimate that a story is a real memory");
+    svg.append("text").attr("class", "lbl-m").attr("x", (m.l + W - m.r) / 2).attr("y", H - 6).attr("text-anchor", "middle").text("computer's guess: chance the story is a real memory");
     svg.append("line").attr("class", "zero").attr("x1", x(0.5)).attr("x2", x(0.5)).attr("y1", m.t).attr("y2", H - m.b);
     ["retold", "imagined", "recalled"].forEach((g) => {
       svg.append("path").attr("d", d3.area().x((_, i) => x(mids[i])).y0(y(0)).y1((d) => y(d)).curve(d3.curveBasis)(D.pRecHist[g])).attr("fill", C[g]).attr("opacity", 0.1);
